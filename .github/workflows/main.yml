@@ -60,3 +60,9 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           artifact_name: 'github-pages'
+
+           - name: Get GitHub Pages URL
+        run: echo "page_url=https://lolamustdie.github.io/Coursework" >> $GITHUB_ENV
+
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
