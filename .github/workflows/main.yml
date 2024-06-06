@@ -12,11 +12,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-    
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -35,7 +35,7 @@ jobs:
           path: build
 
   deploy:
-    if: github.event.pull_request.merged == true || github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    if: ${{ github.event.pull_request.merged == true || github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
     needs: build
 
     permissions:
@@ -46,10 +46,8 @@ jobs:
     environment:
       name: github-pages
 
-    outputs:
-      page_url: ${{ steps.deployment.outputs.page_url }}
-
     runs-on: ubuntu-latest
+
     steps:
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -61,7 +59,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           artifact_name: 'github-pages'
 
-           - name: Get GitHub Pages URL
+      - name: Get GitHub Pages URL
         run: echo "page_url=https://lolamustdie.github.io/Coursework" >> $GITHUB_ENV
 
     outputs:
